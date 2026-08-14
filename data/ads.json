@@ -1,10 +1,12 @@
-{
-  "description": "Premium lifestyle brand offering authentic urban fashion and accessories",
-  "featured": true,
-  "order": 1,
-  "title": "Zero Lifestyle",
-  "brand": "Zero Lifestyle",
-  "category": "Lifestyle",
-  "imagePath": "/assets/ads/capture.png",
-  "destinationUrl": "https://zerolifestyle.com/"
-}
+[
+  {
+    "title": "Zero Lifestyle",
+    "brand": "Zero Lifestyle",
+    "category": "Lifestyle",
+    "imagePath": "assets/ads/capture.png",
+    "destinationUrl": "https://zerolifestyle.com/",
+    "description": "Premium lifestyle brand offering authentic urban fashion and accessories",
+    "featured": true,
+    "order": 1
+  }
+]
