@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdStudio — Premium Ad Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+                   RESET & BASE
+                   ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #07070e;
+            --bg-secondary: #0d0d1a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8d0;
+            --text-muted: #555577;
+            --accent-1: #ff3366;
+            --accent-2: #ff6b6b;
+            --accent-3: #7c3aed;
+            --gold: #fbbf24;
+            --shadow-premium: 0 30px 80px rgba(0, 0, 0, 0.6);
+            --radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================
+                   NAVIGATION
+                   ============================================ */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 0 64px;
+            height: 72px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(7, 7, 14, 0.85);
+            backdrop-filter: blur(30px) saturate(1.8);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            background: rgba(7, 7, 14, 0.97);
+            box-shadow: 0 4px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--accent-1), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo .dot {
+            color: var(--accent-1);
+            -webkit-text-fill-color: var(--accent-1);
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            letter-spacing: 0.3px;
+            position: relative;
+        }
+
+        .nav-links li a::before {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 40%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-1), var(--gold));
+            transition: var(--transition);
+            border-radius: 4px;
+        }
+
+        .nav-links li a:hover::before,
+        .nav-links li a.active::before {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-links li a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links li a.active {
+            color: var(--text-primary);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        /* ============================================
+                   HERO
+                   ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px 60px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 10% 30%, rgba(255, 51, 102, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 70%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+        }
+
+        .hero .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+            animation: orbFloat 20s ease-in-out infinite alternate;
+        }
+
+        .hero .orb.orb-1 {
+            width: 500px;
+            height: 500px;
+            top: -150px;
+            left: -100px;
+            background: var(--accent-1);
+            animation-delay: 0s;
+        }
+
+        .hero .orb.orb-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -100px;
+            right: -50px;
+            background: var(--accent-3);
+            animation-delay: -7s;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(40px, -30px) scale(1.2);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 14vw, 9rem);
+            font-weight: 900;
+            line-height: 1.02;
+            letter-spacing: -4px;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 .word-1 {
+            color: var(--text-primary);
+        }
+
+        .hero h1 .word-2 {
+            background: linear-gradient(135deg, var(--accent-1), #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .word-3 {
+            background: linear-gradient(135deg, var(--gold), #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .word-4 {
+            color: var(--text-primary);
+        }
+
+        .hero h1 .word-5 {
+            background: linear-gradient(135deg, var(--accent-1), var(--gold), var(--accent-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            margin: 32px 0 48px;
+            padding: 20px 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-stats .stat {
+            text-align: center;
+        }
+
+        .hero-stats .stat .number {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-1), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stats .stat .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            padding: 16px 48px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, var(--accent-1), #cc2255);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 40px rgba(255, 51, 102, 0.2);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-3), var(--accent-1));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 50px rgba(255, 51, 102, 0.35);
+        }
+
+        .btn-primary .arrow {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-primary:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        .btn-secondary {
+            padding: 16px 48px;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: bounceDown 2.5s ease-in-out infinite;
+        }
+
+        .scroll-indicator .line {
+            width: 1px;
+            height: 30px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+        }
+
+        @keyframes bounceDown {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(6px);
+            }
+        }
+
+        /* ============================================
+                   SECTION COMMON
+                   ============================================ */
+        .section {
+            padding: 80px 60px;
+            max-width: 1360px;
+            margin: 0 auto;
+            display: none;
+            animation: fadeUp 0.7s ease forwards;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-1);
+            margin-bottom: 6px;
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 4vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 6px;
+        }
+
+        .section-title .gradient-text {
+            background: linear-gradient(135deg, var(--accent-1), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+
+        /* ============================================
+                   ADSON — SEARCH + FILTERS + GRID
+                   ============================================ */
+        .adson-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-wrapper {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 14px 18px 14px 46px;
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: var(--transition);
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-wrapper input::placeholder {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .search-wrapper input:focus {
+            border-color: var(--accent-1);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 40px rgba(255, 51, 102, 0.04);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+            pointer-events: none;
+            font-weight: 300;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 22px;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: rgba(255, 51, 102, 0.12);
+            border-color: var(--accent-1);
+            color: var(--accent-1);
+        }
+
+        .results-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding: 0 4px;
+        }
+
+        .results-count {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+
+        .results-count strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .ad-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        .ad-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            will-change: transform;
+        }
+
+        .ad-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-1);
+            box-shadow: var(--shadow-premium);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .ad-image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 66.67%;
+            background: var(--bg-secondary);
+            overflow: hidden;
+        }
+
+        .ad-image-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform;
+        }
+
+        .ad-card:hover .ad-image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .ad-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 4px 16px;
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            border: 1px solid rgba(251, 191, 36, 0.1);
+        }
+
+        .ad-info {
+            padding: 22px 24px 26px;
+        }
+
+        .ad-info .ad-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .ad-info .ad-brand {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .ad-info .ad-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .ad-info .ad-meta span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .ad-info .ad-meta .ad-category {
+            color: var(--accent-1);
+            font-weight: 500;
+        }
+
+        .ad-info .ad-click {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: var(--accent-1);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .ad-card:hover .ad-click {
+            gap: 12px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-muted);
+            font-weight: 300;
+            grid-column: 1 / -1;
+        }
+
+        .no-results .icon {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+
+        /* ============================================
+                   RATING
+                   ============================================ */
+        .rating-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            max-width: 620px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stars-display {
+            font-size: 4.2rem;
+            letter-spacing: 8px;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .stars-display .star {
+            color: #2a2a4a;
+            transition: color 0.3s;
+        }
+
+        .stars-display .star.filled {
+            color: var(--gold);
+            text-shadow: 0 0 60px rgba(251, 191, 36, 0.1);
+        }
+
+        .stars-display .star.half {
+            background: linear-gradient(90deg, var(--gold) 50%, #2a2a4a 50%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .rating-number {
+            font-size: 3.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), #e8a838);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .rating-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 300;
+            margin-top: 2px;
+        }
+
+        .rating-bars {
+            width: 100%;
+            margin-top: 32px;
+        }
+
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 6px;
+        }
+
+        .rating-bar .label {
+            width: 40px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .rating-bar .track {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .rating-bar .fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent-1), var(--gold));
+            transition: width 1.5s ease;
+        }
+
+        .rating-bar .count {
+            width: 35px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: right;
+            font-weight: 300;
+        }
+
+        /* ============================================
+                   FEATURES
+                   ============================================ */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-1);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .feature-card .icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            opacity: 0.6;
+        }
+
+        .feature-card h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+                   ABOUT
+                   ============================================ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 2;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .about-text p strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .about-text .highlight {
+            color: var(--accent-1);
+            font-weight: 400;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+        }
+
+        .about-card h4 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .about-card .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 300;
+        }
+
+        .about-card .contact-item:hover {
+            color: var(--text-primary);
+        }
+
+        .about-card .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .about-card .contact-item .icon {
+            font-size: 1.1rem;
+            width: 32px;
+            text-align: center;
+            opacity: 0.4;
+            font-weight: 300;
+        }
+
+        /* ============================================
+                   CREATE
+                   ============================================ */
+        .create-container {
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .create-container .create-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            opacity: 0.2;
+            font-weight: 300;
+        }
+
+        .create-container h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+        }
+
+        .create-container h2 .gradient-text {
+            background: linear-gradient(135deg, var(--accent-1), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .create-container p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 36px;
+            line-height: 1.8;
+        }
+
+        .contact-email-big {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 44px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 400;
+        }
+
+        .contact-email-big:hover {
+            background: rgba(255, 51, 102, 0.06);
+            border-color: var(--accent-1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(255, 51, 102, 0.05);
+        }
+
+        .create-container .small-note {
+            margin-top: 24px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 300;
+        }
+
+        /* ============================================
+                   FOOTER
+                   ============================================ */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 40px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        footer .brand {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        footer .separator {
+            color: var(--border-subtle);
+            margin: 0 8px;
+        }
+
+        /* ============================================
+                   RESPONSIVE
+                   ============================================ */
+        @media (max-width: 1024px) {
+            .section {
+                padding: 60px 40px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 24px;
+                height: 64px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 64px;
+                left: 16px;
+                right: 16px;
+                background: rgba(7, 7, 14, 0.98);
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--border-subtle);
+                border-radius: 12px;
+                padding: 12px;
+                gap: 2px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links li a {
+                padding: 14px 20px;
+                width: 100%;
+                text-align: center;
+                border-radius: 8px;
+            }
+
+            .nav-links li a::before {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.8rem, 12vw, 4.5rem);
+                letter-spacing: -2px;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px 24px;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .hero-stats .stat .number {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding: 80px 16px 40px;
+            }
+
+            .scroll-indicator {
+                display: none;
+            }
+
+            .section {
+                padding: 50px 16px;
+            }
+
+            .adson-controls {
+                flex-direction: column;
+                padding: 16px;
+            }
+
+            .filter-group {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .ad-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-meta {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .rating-container {
+                padding: 40px 24px;
+            }
+
+            .stars-display {
+                font-size: 3rem;
+                letter-spacing: 4px;
+            }
+
+            .rating-number {
+                font-size: 2.4rem;
+            }
+
+            .create-container h2 {
+                font-size: 2rem;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 14px 32px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-cta {
+                width: 100%;
+            }
+
+            .about-card {
+                padding: 24px 20px;
+            }
+
+            .contact-email-big {
+                padding: 16px 28px;
+                font-size: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.1rem;
+            }
+            .logo .dot {
+                font-size: 1.4rem;
+            }
+            .search-wrapper input {
+                padding: 12px 14px 12px 40px;
+                font-size: 0.85rem;
+            }
+            .search-icon {
+                left: 12px;
+                font-size: 0.85rem;
+            }
+            .filter-btn {
+                padding: 8px 14px;
+                font-size: 0.7rem;
+            }
+            .ad-info {
+                padding: 16px 18px 20px;
+            }
+            .ad-info .ad-title {
+                font-size: 1rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+    NAVIGATION
+    ========================================== -->
+    <nav id="navbar">
+        <a href="#" class="logo" data-section="home">Ad<span>Studio</span><span class="dot">.</span></a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" class="active" data-section="home">Home</a></li>
+            <li><a href="#" data-section="adson">Adson</a></li>
+            <li><a href="#" data-section="features">Features</a></li>
+            <li><a href="#" data-section="rating">Rating</a></li>
+            <li><a href="#" data-section="about">About</a></li>
+            <li><a href="#" data-section="create">Create</a></li>
+        </ul>
+    </nav>
+
+    <!-- ==========================================
+    HOME / HERO
+    ========================================== -->
+    <section class="hero section active" id="section-home">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+
+        <div class="hero-content">
+            <h1>
+                <span class="word-1">See</span>
+                <span class="word-2">Your</span>
+                <span class="word-3">Brand</span>
+                <br>
+                <span class="word-4">With</span>
+                <span class="word-5">AdStudio</span>
+            </h1>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="number" id="brandCount">0</div>
+                    <div class="label">Active Brands</div>
+                </div>
+                <div class="stat">
+                    <div class="number">4.3 ★</div>
+                    <div class="label">User Rating</div>
+                </div>
+                <div class="stat">
+                    <div class="number">99.9%</div>
+                    <div class="label">Uptime</div>
+                </div>
+            </div>
+
+            <div class="hero-cta">
+                <a href="#" class="btn-primary" data-section="adson">
+                    <span>Explore Ads</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="#" class="btn-secondary" data-section="create">
+                    Get Started
+                </a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+    ADSON
+    ========================================== -->
+    <section class="section" id="section-adson">
+        <div class="section-header">
+            <span class="section-label">Discover</span>
+            <h2 class="section-title">Featured <span class="gradient-text">Ads</span></h2>
+            <p class="section-subtitle">Explore premium brands and campaigns from around the world</p>
+        </div>
+
+        <div class="adson-controls">
+            <div class="search-wrapper">
+                <span class="search-icon">⌕</span>
+                <input type="text" id="searchInput" placeholder="Search ads by brand, title, or category..." autocomplete="off">
+            </div>
+            <div class="filter-group" id="filterGroup">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="Fashion">Fashion</button>
+                <button class="filter-btn" data-filter="Technology">Tech</button>
+                <button class="filter-btn" data-filter="Sportswear">Sportswear</button>
+                <button class="filter-btn" data-filter="Automotive">Auto</button>
+            </div>
+        </div>
+
+        <div class="results-meta">
+            <div class="results-count" id="resultsCount">Showing <strong>0</strong> ads</div>
+        </div>
+
+        <div class="ad-grid" id="adGrid"></div>
+    </section>
+
+    <!-- ==========================================
+    FEATURES
+    ========================================== -->
+    <section class="section" id="section-features">
+        <div class="section-header">
+            <span class="section-label">Why AdStudio</span>
+            <h2 class="section-title">Premium <span class="gradient-text">Features</span></h2>
+            <p class="section-subtitle">Everything you need to showcase your brand at the highest level</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon">✦</div>
+                <h4>Premium Showcase</h4>
+                <p>High-quality image ads displayed in a clean, professional gallery that puts your brand first.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">◈</div>
+                <h4>Smart Search</h4>
+                <p>Advanced filtering by category, brand, or title — find exactly what you're looking for instantly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">◆</div>
+                <h4>Global Reach</h4>
+                <p>Connect with audiences worldwide through our premium ad network and showcase platform.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">▲</div>
+                <h4>Analytics Ready</h4>
+                <p>Track engagement, views, and clicks with comprehensive analytics built into every campaign.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+    RATING
+    ========================================== -->
+    <section class="section" id="section-rating">
+        <div class="section-header">
+            <span class="section-label">Reviews</span>
+            <h2 class="section-title">Community <span class="gradient-text">Rating</span></h2>
+            <p class="section-subtitle">What our users think about AdStudio</p>
+        </div>
+
+        <div class="rating-container">
+            <div class="stars-display" id="starsDisplay">
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star half">★</span>
+            </div>
+            <div class="rating-number">4.3</div>
+            <div class="rating-label">out of 5 · 1,284 reviews</div>
+
+            <div class="rating-bars">
+                <div class="rating-bar">
+                    <span class="label">5 ★</span>
+                    <div class="track"><div class="fill" style="width: 72%;"></div></div>
+                    <span class="count">72%</span>
+                </div>
+                <div class="rating-bar">
+                    <span class="label">4 ★</span>
+                    <div class="track"><div class="fill" style="width: 18%;"></div></div>
+                    <span class="count">18%</span>
+                </div>
+                <div class="rating-bar">
+                    <span class="label">3 ★</span>
+                    <div class="track"><div class="fill" style="width: 6%;"></div></div>
+                    <span class="count">6%</span>
+                </div>
+                <div class="rating-bar">
+                    <span class="label">2 ★</span>
+                    <div class="track"><div class="fill" style="width: 3%;"></div></div>
+                    <span class="count">3%</span>
+                </div>
+                <div class="rating-bar">
+                    <span class="label">1 ★</span>
+                    <div class="track"><div class="fill" style="width: 1%;"></div></div>
+                    <span class="count">1%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+    ABOUT
+    ========================================== -->
+    <section class="section" id="section-about">
+        <div class="section-header">
+            <span class="section-label">About</span>
+            <h2 class="section-title">Ad<span class="gradient-text">Studio</span></h2>
+            <p class="section-subtitle">The future of brand showcasing</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-text">
+                <p>
+                    <strong>AdStudio</strong> is a premium platform designed for brands to showcase their 
+                    <span class="highlight">visual identity</span> through high-quality image ads in an 
+                    immersive, professional environment.
+                </p>
+                <p>
+                    Our platform provides a <span class="highlight">clean, distraction-free</span> gallery 
+                    where users can discover brands, explore campaigns, and engage with content that 
+                    resonates with their interests.
+                </p>
+                <p>
+                    Built with modern design principles, AdStudio delivers a <span class="highlight">seamless</span> 
+                    experience across all devices.
+                </p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">
+                    &copy; 2026 AdStudio. All rights reserved.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h4>Contact</h4>
+                <a href="mailto:mahmeeed.x@gmail.com" class="contact-item">
+                    <span class="icon">✉</span>
+                    <span>mahmeeed.x@gmail.com</span>
+                </a>
+                <div class="contact-item">
+                    <span class="icon">◆</span>
+                    <span>Global — Digital</span>
+                </div>
+                <div class="contact-item">
+                    <span class="icon">◈</span>
+                    <span>24 / 7 Support</span>
+                </div>
+                <div class="contact-item" style="border-bottom: none;">
+                    <span class="icon">▲</span>
+                    <span>AdStudio v2.0</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+    CREATE
+    ========================================== -->
+    <section class="section" id="section-create">
+        <div class="create-container">
+            <div class="create-icon">◆</div>
+            <h2>Ready to <span class="gradient-text">Create</span>?</h2>
+            <p>
+                Want to feature your brand on AdStudio?<br>
+                Reach out to us and let's build something exceptional together.
+            </p>
+            <a href="mailto:mahmeeed.x@gmail.com" class="contact-email-big">
+                ✉ mahmeeed.x@gmail.com
+            </a>
+            <p class="small-note">We respond within 24 hours.</p>
+        </div>
+    </section>
+
+    <!-- ==========================================
+    FOOTER
+    ========================================== -->
+    <footer>
+        <p>&copy; 2026 <span class="brand">AdStudio</span> <span class="separator">·</span> Built with precision <span class="separator">·</span> All rights reserved</p>
+    </footer>
+
+    <!-- ==========================================
+    JAVASCRIPT
+    ========================================== -->
+    <script>
+        // ============================================
+        // LOAD ADS FROM CMS (Admin Panel) - NO HARDCODED ADS
+        // ============================================
+        let adsData = [];
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        // ============================================
+        // LOAD ADS FUNCTION
+        // ============================================
+        async function loadAds() {
+            try {
+                const response = await fetch('data/ads.json');
+                adsData = await response.json();
+                // Update brand count
+                document.getElementById('brandCount').textContent = adsData.length;
+                renderAds();
+                console.log('✅ Ads loaded from CMS:', adsData.length, 'ads');
+            } catch (error) {
+                console.log('✨ No ads yet. Add your first ad from the admin panel!');
+                adsData = [];
+                document.getElementById('brandCount').textContent = '0';
+                renderAds();
+            }
+        }
+
+        // ============================================
+        // RENDER FUNCTION
+        // ============================================
+        function renderAds() {
+            const query = currentSearch.toLowerCase().trim();
+            
+            const filtered = adsData.filter(ad => {
+                const matchesSearch = ad.title.toLowerCase().includes(query) ||
+                    ad.brand.toLowerCase().includes(query) ||
+                    ad.category.toLowerCase().includes(query);
+                
+                const matchesFilter = currentFilter === 'all' || ad.category === currentFilter;
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            const grid = document.getElementById('adGrid');
+            grid.innerHTML = '';
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results">
+                        <span class="icon">✦</span>
+                        ${adsData.length === 0 ? 'No ads yet. <a href="/admin" style="color: var(--accent-1);">Add your first ad from the admin panel →</a>' : 'No ads match your criteria'}
+                    </div>
+                `;
+                document.getElementById('resultsCount').innerHTML = `Showing <strong>0</strong> ads`;
+                return;
+            }
+            
+            filtered.forEach(ad => {
+                const card = document.createElement('div');
+                card.className = 'ad-card';
+                
+                card.addEventListener('click', () => {
+                    window.open(ad.destinationUrl, '_blank');
+                });
+                
+                card.innerHTML = `
+                    <div class="ad-image-wrapper">
+                        <img src="${ad.imagePath}" alt="${ad.title}" loading="lazy">
+                        <span class="ad-badge">${ad.category}</span>
+                    </div>
+                    <div class="ad-info">
+                        <div class="ad-title">${ad.title}</div>
+                        <div class="ad-brand">${ad.brand}</div>
+                        ${ad.description ? `<div style="font-size:0.85rem;color:var(--text-muted);margin:6px 0;">${ad.description}</div>` : ''}
+                        <div class="ad-meta">
+                            <span class="ad-category">${ad.category}</span>
+                            <span>·</span>
+                            <span>${ad.featured ? 'Featured' : 'Standard'}</span>
+                        </div>
+                        <div class="ad-click">Visit Website →</div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+            
+            document.getElementById('resultsCount').innerHTML = `Showing <strong>${filtered.length}</strong> of ${adsData.length} ads`;
+        }
+
+        // ============================================
+        // SEARCH
+        // ============================================
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentSearch = e.target.value;
+                renderAds();
+            }, 150);
+        });
+
+        // ============================================
+        // FILTERS
+        // ============================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderAds();
+            });
+        });
+
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = {
+            home: document.getElementById('section-home'),
+            adson: document.getElementById('section-adson'),
+            features: document.getElementById('section-features'),
+            rating: document.getElementById('section-rating'),
+            about: document.getElementById('section-about'),
+            create: document.getElementById('section-create')
+        };
+
+        function navigateTo(sectionId) {
+            Object.values(sections).forEach(s => s.classList.remove('active'));
+            const target = sections[sectionId];
+            if (target) {
+                target.classList.add('active');
+                target.style.animation = 'none';
+                requestAnimationFrame(() => {
+                    target.style.animation = 'fadeUp 0.7s ease forwards';
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+
+            document.getElementById('navLinks').classList.remove('open');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateTo(link.dataset.section);
+            });
+        });
+
+        document.querySelectorAll('[data-section]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateTo(el.dataset.section);
+            });
+        });
+
+        // ============================================
+        // HAMBURGER MENU
+        // ============================================
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            const nav = document.getElementById('navbar');
+            if (!nav.contains(e.target)) {
+                document.getElementById('navLinks').classList.remove('open');
+            }
+        });
+
+        // ============================================
+        // NAVBAR SCROLL
+        // ============================================
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ============================================
+        // LOAD ADS WHEN PAGE LOADS
+        // ============================================
+        loadAds();
+
+        console.log('✦ AdStudio v2.0 loaded - No hardcoded ads!');
+        console.log('◆ Add your ads from the admin panel: /admin');
+    </script>
+
+</body>
+</html>
